@@ -11,7 +11,7 @@
     // ============================
     // Constants
     // ============================
-    const STORAGE_KEY = 'yt_feed_channels';
+    const STORAGE_KEY = typeof CHANNELS_1000 !== 'undefined' ? 'yt_feed_channels_1000' : 'yt_feed_channels';
     const CACHE_KEY = 'yt_feed_cache_v2';
     const CACHE_EXPIRY = 24 * 60 * 60 * 1000; // 24시간
     const CORS_PROXIES = [
@@ -49,6 +49,7 @@
     // ============================
     // State
     // ============================
+    const defaultChannels = typeof DEFAULT_CHANNELS !== 'undefined' ? DEFAULT_CHANNELS : (typeof CHANNELS_1000 !== 'undefined' ? CHANNELS_1000 : []);
     let channels = [];
     let allVideos = [];
     let activeFilter = 'all';
@@ -73,15 +74,15 @@
             try {
                 channels = JSON.parse(stored);
                 // 새로 가져온 채널 개수가 훨씬 많으면(대량 업데이트 시) 덮어쓰기
-                if (DEFAULT_CHANNELS.length > channels.length + 10) {
-                    channels = [...DEFAULT_CHANNELS];
+                if (defaultChannels.length > channels.length + 10) {
+                    channels = [...defaultChannels];
                     saveChannels();
                 }
             } catch (e) {
-                channels = [...DEFAULT_CHANNELS];
+                channels = [...defaultChannels];
             }
         } else {
-            channels = [...DEFAULT_CHANNELS];
+            channels = [...defaultChannels];
         }
     }
 
@@ -147,7 +148,6 @@
             : initial;
 
         card.innerHTML = `
-            ${isNew ? '<span class="new-badge">NEW</span>' : ''}
             <div class="card-thumbnail">
                 <img src="${video.thumbnail}" alt="${escapeHtml(video.title)}" loading="lazy"
                      onerror="this.src='https://i.ytimg.com/vi/${video.videoId}/hqdefault.jpg'">
@@ -187,8 +187,9 @@
 
     function buildFilterButtons() {
         // Remove existing dynamic buttons
-        navContainer.querySelectorAll('.nav-btn:not([data-filter="all"])').forEach(el => el.remove());
-
+        if (navContainer) {
+            navContainer.querySelectorAll('.nav-btn:not([data-filter="all"])').forEach(el => el.remove());
+        }
         // Get unique channels from loaded videos
         const channelsInVideos = new Map();
         allVideos.forEach(v => {
@@ -203,19 +204,18 @@
             btn.setAttribute('data-filter', id);
             btn.textContent = name;
             btn.addEventListener('click', () => setFilter(id, btn));
-            navContainer.appendChild(btn);
+            if (navContainer) navContainer.appendChild(btn);
         });
     }
-
     function setFilter(filter, btnEl) {
         activeFilter = filter;
 
         // Update active state
-        navContainer.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+        if (navContainer) navContainer.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
         if (btnEl) {
             btnEl.classList.add('active');
         } else {
-            filterAllBtn.classList.add('active');
+            if (filterAllBtn) filterAllBtn.classList.add('active');
         }
 
         renderVideos();
@@ -294,7 +294,7 @@
         saveChannels();
         closeSettings();
         activeFilter = 'all';
-        filterAllBtn.classList.add('active');
+        if (filterAllBtn) filterAllBtn.classList.add('active');
         loadFromCache();
         showToast('설정이 저장되었습니다');
     }
@@ -429,7 +429,7 @@
             }, 300);
         });
 
-        filterAllBtn.addEventListener('click', () => setFilter('all', filterAllBtn));
+        if (filterAllBtn) filterAllBtn.addEventListener('click', () => setFilter('all', filterAllBtn));
 
         sortSelect.addEventListener('change', (e) => {
             activeSort = e.target.value;
