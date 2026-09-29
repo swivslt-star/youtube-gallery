@@ -3563,6 +3563,36 @@ const CHANNELS_ALGORITHM = [
         "name": "Teenieping Music Official",
         "id": "UCZoAMq1V4uIkl8QBm-4iPyA",
         "avatar": "https://yt3.googleusercontent.com/N9kJQGB-yAS8WrSp7BuZU6dy2vybm0EXKn72EzARU_lAlAITv8LwMF_-1xrj90khew_ADo3o=s176-c-k-c0x00ffffff-no-rj"
+    },
+    {
+        "name": "Chenyeol",
+        "id": "UCpTqmKVg0qil0j3ITSsGUCQ",
+        "avatar": "https://yt3.googleusercontent.com/f2Him3yeIzLUTEHkdCQ_UsNX0F35Hpxdkz3fK0bnOgLizvhHUxey13Q-VWQ6SILuD6B2bdQBVA=s176-c-k-c0x00ffffff-no-rj"
+    },
+    {
+        "name": "베어뮤직 BearMusic",
+        "id": "UCylvD44Ks75w-jTw4ie3Crg",
+        "avatar": "https://yt3.googleusercontent.com/Nj3GkkJqCzjDIdUY4RVZ9zw2EIQ0JyDOOAJb8glcgUlTMVdMW5ybDK_FGdy0Z0oARfnnZ0zVOQ=s176-c-k-c0x00ffffff-no-rj"
+    },
+    {
+        "name": "티니핑TV",
+        "id": "UCtm_ppWxsfRzxaYXMA2bqMw",
+        "avatar": "https://yt3.googleusercontent.com/0jiLIGopUhORKQBiXSjrmU8pGZphfhFRUf4fHeo7W-mAn2dPYACJVY_6KPS8MYpMJygKvuay=s176-c-k-c0x00ffffff-no-rj"
+    },
+    {
+        "name": "JH Playlist",
+        "id": "UCZaxtcrLDEOFeYlfa41p6Ww",
+        "avatar": "https://yt3.googleusercontent.com/AVQU2ZYT11AOUlQEhmRMgzBFEBMGONRR-Rx2D9qg0VLYYnJX-hKSZO7inquFvj2E2UYIXiQ7IQ=s176-c-k-c0x00ffffff-no-rj"
+    },
+    {
+        "name": "시나놀자",
+        "id": "UC2gMW3uN8vXnhQ-0T6HMtnw",
+        "avatar": "https://yt3.googleusercontent.com/UL3WpZu9CbFHVjTPEv7WE7LceEjPIUUVxVBskRikbatAx6YL-CtoVSMOTJ6svm1CcVVaz85mpg=s176-c-k-c0x00ffffff-no-rj"
+    },
+    {
+        "name": "주둥이방송",
+        "id": "UC9ta639M37zzWKwo7kKc80A",
+        "avatar": "https://yt3.googleusercontent.com/WeDSMKLlYZ7ZdCbFwC47EElCfXN612CK5XMXJLOL49HT_wO6cX8aJWuStv9tKayysMNZc3HdKr4=s176-c-k-c0x00ffffff-no-rj"
     }
 ];
 
