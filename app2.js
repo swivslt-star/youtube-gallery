@@ -56,6 +56,7 @@
     let channels = [];
     let allVideos = [];
     let activeFilter = 'all';
+    let activeCategory = 'all';
     let activeSort = 'latest';
     let tempChannels = []; // for modal editing
 
@@ -108,6 +109,7 @@
         showLoading(false);
         showEmpty(false);
         buildFilterButtons();
+        buildCategoryFilters();
         renderVideos();
     }
 
@@ -117,9 +119,18 @@
     function renderVideos() {
         videoGrid.innerHTML = '';
 
-        const filtered = activeFilter === 'all'
-            ? [...allVideos]
-            : allVideos.filter(v => v.channelId === activeFilter);
+        let filtered = allVideos;
+        
+        if (activeCategory !== 'all') {
+            const categoryChannelIds = channels.filter(c => c.category === activeCategory).map(c => c.id);
+            filtered = filtered.filter(v => categoryChannelIds.includes(v.channelId));
+        } else if (activeFilter !== 'all') {
+            filtered = filtered.filter(v => v.channelId === activeFilter);
+        } else {
+            // "모두보기"
+            const currentChannelIds = channels.map(c => c.id);
+            filtered = filtered.filter(v => currentChannelIds.includes(v.channelId));
+        }
 
         // 정렬 로직 적용
         if (activeSort === 'latest') {
@@ -210,8 +221,65 @@
             if (navContainer) navContainer.appendChild(btn);
         });
     }
+
+    function buildCategoryFilters() {
+        const catContainer = document.getElementById('category-filters');
+        if (!catContainer) return;
+
+        const categories = new Set();
+        channels.forEach(c => {
+            if (c.category) categories.add(c.category);
+        });
+
+        if (categories.size === 0) {
+            catContainer.style.display = 'none';
+            return;
+        }
+
+        catContainer.innerHTML = '';
+        
+        const allBtn = document.createElement('button');
+        allBtn.className = 'category-btn active';
+        allBtn.textContent = '전체 보기';
+        allBtn.addEventListener('click', () => setCategoryFilter('all', allBtn));
+        catContainer.appendChild(allBtn);
+
+        Array.from(categories).sort().forEach(cat => {
+            const btn = document.createElement('button');
+            btn.className = 'category-btn';
+            btn.textContent = cat;
+            btn.addEventListener('click', () => setCategoryFilter(cat, btn));
+            catContainer.appendChild(btn);
+        });
+    }
+
+    function setCategoryFilter(cat, btnEl) {
+        activeCategory = cat;
+        activeFilter = 'all'; // reset channel filter
+        const catContainer = document.getElementById('category-filters');
+        if (catContainer) {
+            catContainer.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+        }
+        if (btnEl) btnEl.classList.add('active');
+        
+        if (navContainer) {
+            navContainer.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            if (filterAllBtn) filterAllBtn.classList.add('active');
+        }
+
+        renderVideos();
+    }
+
     function setFilter(filter, btnEl) {
         activeFilter = filter;
+        activeCategory = 'all'; // reset category filter
+
+        const catContainer = document.getElementById('category-filters');
+        if (catContainer) {
+            catContainer.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+            const allBtn = catContainer.querySelector('.category-btn'); // first child is ALL
+            if (allBtn) allBtn.classList.add('active');
+        }
 
         // Update active state
         if (navContainer) navContainer.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
