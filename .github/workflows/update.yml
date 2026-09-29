@@ -26,6 +26,7 @@ jobs:
           node sync.js
           node sync1000.js
           node syncAlgorithm.js
+          node generate_counts.js
 
       - name: Commit and Push changes
         uses: stefanzweifel/git-auto-commit-action@v5

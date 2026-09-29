@@ -61,12 +61,24 @@
     let tempChannels = []; // for modal editing
 
     // ============================
-    // Initialize
-    // ============================
     function init() {
         loadChannels();
         setupEventListeners();
         loadFromCache();
+        updateNavCounts();
+    }
+
+    function updateNavCounts() {
+        if (typeof CHANNEL_COUNTS !== 'undefined') {
+            const nav1 = document.querySelector('a[href="index.html"]');
+            if (nav1) nav1.textContent = `🏠 구독 (${CHANNEL_COUNTS.default})`;
+            
+            const nav2 = document.querySelector('a[href="index1000.html"]');
+            if (nav2) nav2.textContent = `🔥 Top 1000 (${CHANNEL_COUNTS.top1000})`;
+
+            const nav3 = document.querySelector('a[href="indexAlgorithm.html"]');
+            if (nav3) nav3.textContent = `✨ 알고리즘 (${CHANNEL_COUNTS.algorithm})`;
+        }
     }
 
     // ============================
