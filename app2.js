@@ -11,7 +11,8 @@
     // ============================
     // Constants
     // ============================
-    const STORAGE_KEY = typeof CHANNELS_1000 !== 'undefined' ? 'yt_feed_channels_1000' : 'yt_feed_channels';
+    const STORAGE_KEY = typeof CHANNELS_ALGORITHM !== 'undefined' ? 'yt_feed_channels_algo' :
+                        (typeof CHANNELS_1000 !== 'undefined' ? 'yt_feed_channels_1000' : 'yt_feed_channels');
     const CACHE_KEY = 'yt_feed_cache_v2';
     const CACHE_EXPIRY = 24 * 60 * 60 * 1000; // 24시간
     const CORS_PROXIES = [
@@ -49,7 +50,9 @@
     // ============================
     // State
     // ============================
-    const defaultChannels = typeof DEFAULT_CHANNELS !== 'undefined' ? DEFAULT_CHANNELS : (typeof CHANNELS_1000 !== 'undefined' ? CHANNELS_1000 : []);
+    const defaultChannels = typeof DEFAULT_CHANNELS !== 'undefined' ? DEFAULT_CHANNELS : 
+                            (typeof CHANNELS_ALGORITHM !== 'undefined' ? CHANNELS_ALGORITHM :
+                            (typeof CHANNELS_1000 !== 'undefined' ? CHANNELS_1000 : []));
     let channels = [];
     let allVideos = [];
     let activeFilter = 'all';

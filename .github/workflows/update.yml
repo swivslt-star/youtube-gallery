@@ -22,7 +22,10 @@ jobs:
           node-version: '20'
 
       - name: Run sync script
-        run: node sync.js
+        run: |
+          node sync.js
+          node sync1000.js
+          node syncAlgorithm.js
 
       - name: Commit and Push changes
         uses: stefanzweifel/git-auto-commit-action@v5
